@@ -11,10 +11,21 @@ public class DemoController {
 
     public DemoController(DemoService service){ this.service = service;}
 
-    @GetMapping("/products/fetch-product")
-    public String getProductName(@RequestParam("name") String name){
-       return service.getProductName(name);
+    @GetMapping(value = "/persons/by-city", params = "city")
+    public String getEntityCity(@RequestParam("city") String city){
+      return service.getEntityByCity(city);
     }
+
+    @GetMapping(value = "/persons/by-city", params = "age")
+    public String getEntityByAge(@RequestParam("age") int age){
+        return service.getEntityByAge(age);
+    }
+
+    @GetMapping(value = "/persons/by-city")
+    public String getEntityByNameAndSurname(@RequestParam("name") String name, @RequestParam("surname") String surname){
+        return service.getEntityByNameAndSurname(name, surname);
+    }
+
 
     @GetMapping("/")
     public static String hello () {
