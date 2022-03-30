@@ -22,7 +22,7 @@ public interface PersonRepository extends CrudRepository<Person,Integer> {
          List<Person> findByAgeQuery(@Param("age") int age);
 
          @Query("select e from Person e where e.name = :name and e.surname = :surname")
-         Optional<Person> findByNameAndSurnameQuery(@Param("name") String name, @Param("surname") String surname);
+         List<Person> findByNameAndSurnameQuery(@Param("name") String name, @Param("surname") String surname);
 
 
 }
