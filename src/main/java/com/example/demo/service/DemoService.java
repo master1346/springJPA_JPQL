@@ -18,15 +18,15 @@ public class DemoService {
     }
 
     public List<Person> getEntityByCity(String city){
-        return  personRepository.findByCity(city);
+        return  personRepository.findByCityQuery(city);
     }
 
     public List<Person> getEntityByAge(int age){
-        return  personRepository.findByAge(age);
+        return  personRepository.findByAgeQuery(age);
     }
 
     public Optional<Person> getEntityByNameAndSurname(String name, String surname){
-        return personRepository.findByNameAndSurname(name, surname);
+        return personRepository.findByNameAndSurnameQuery(name, surname);
     }
 
 }
