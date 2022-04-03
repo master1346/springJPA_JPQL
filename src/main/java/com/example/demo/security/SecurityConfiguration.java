@@ -11,8 +11,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
          auth.inMemoryAuthentication()
-                 .withUser("user").password("{noop}1").authorities("write", "read");
-
+                 .withUser("user1").password("{noop}1").authorities("WRITE")
+                 .and()
+                 .withUser("user2").password("{noop}2").authorities("READ")
+                 .and()
+                 .withUser("user3").password("{noop}3").authorities("DELETE");
      }
     @Override
     protected void configure(HttpSecurity http) throws Exception{
