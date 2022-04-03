@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import com.example.demo.entity.Person;
-import com.example.demo.repository.PersonRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -30,18 +29,15 @@ public class CommandLineApp implements CommandLineRunner {
 
         IntStream.range(0, 15)
                 .forEach(i -> {
-                    var person =
-                            new Person.Builder()
-                            .name(names.get(random.nextInt(names.size())))
-                            .surname(surname.get(random.nextInt(surname.size())))
-                            .age(rnd(15, 60))
-                            .phone_number("89513369216")
-                            .city(city.get(random.nextInt(city.size())))
-                            .build();
-
+                    var person = new Person()
+                            .initBuilder(names.get(random.nextInt(names.size())),
+                                    surname.get(random.nextInt(surname.size())),
+                                    rnd(15, 60),
+                                    "89513369216",
+                                    city.get(random.nextInt(city.size()))
+                                    );
                     entityManager.persist(person);
                         }
                         );
-
     }
 }

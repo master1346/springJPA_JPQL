@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
 
+import com.example.demo.entity.Person;
 import com.example.demo.repository.PersonRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DemoService {
@@ -14,16 +17,16 @@ public class DemoService {
         this.personRepository = personRepository;
     }
 
-    public String getEntityByCity(String city){
-        return  personRepository.findByCity(city).toString();
+    public List<Person> getEntityByCity(String city){
+        return  personRepository.findByCity(city);
     }
 
-    public String getEntityByAge(int age){
-        return  personRepository.findByAge(age).toString();
+    public List<Person> getEntityByAge(int age){
+        return  personRepository.findByAge(age);
     }
 
-    public String getEntityByNameAndSurname(String name, String surname){
-        return personRepository.findByNameAndSurname(name, surname).toString();
+    public Optional<Person> getEntityByNameAndSurname(String name, String surname){
+        return personRepository.findByNameAndSurname(name, surname);
     }
 
 }

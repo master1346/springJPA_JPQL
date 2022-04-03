@@ -4,16 +4,16 @@ import javax.persistence.*;
 
 @Entity
 public class Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Id
     private String name;
+    @Id
     private String surname;
-
+    @Id
     @Column(nullable = false)
     private int age;
 
-    private String phone_number;
+    private String phoneNumber;
     private String city;
 
     public Person() {
@@ -27,49 +27,12 @@ public class Person {
         this.city = city;
     }
 
-    public static class Builder {
-        private Person person;
-
-        public Builder() {
-            person = new Person();
-        }
-
-        public Builder name(String name) {
-            person.name = name;
-            return this;
-        }
-
-        public Builder surname(String surname) {
-            person.surname = surname;
-            return this;
-        }
-
-        public Builder age(int age) {
-            person.age = age;
-            return this;
-        }
-
-        public Builder phone_number(String phone_number) {
-            person.phone_number = phone_number;
-            return this;
-        }
-
-        public Builder city(String city) {
-            person.city = city;
-            return this;
-        }
-        public Person build(){
-            return person;
-        }
-
-    }
-
-    public Person(int id, String name, String surname, int age, String phone_number, String city) {
+    public Person(int id, String name, String surname, int age, String phoneNumber, String city) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.age = age;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
         this.city = city;
     }
 
@@ -106,11 +69,11 @@ public class Person {
     }
 
     public String getPhone_number() {
-        return phone_number;
+        return phoneNumber;
     }
 
     public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getCity_of_living() {
@@ -128,8 +91,51 @@ public class Person {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", age=" + age +
-                ", phone_number='" + phone_number + '\'' +
+                ", phone_number='" + phoneNumber + '\'' +
                 ", city_of_living='" + city + '\'' +
                 '}';
+    }
+
+    private static class Builder {
+        private final Person person = new Person();
+
+        public Builder name(String name) {
+            person.name = name;
+            return this;
+        }
+
+        public Builder surname(String surname) {
+            person.surname = surname;
+            return this;
+        }
+
+        public Builder age(int age) {
+            person.age = age;
+            return this;
+        }
+
+        public Builder phoneNumber(String phoneNumber) {
+            person.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder city(String city) {
+            person.city = city;
+            return this;
+        }
+        public Person build(){
+            return person;
+        }
+
+    }
+
+    public Person initBuilder(String name, String surname, int age, String phoneNumber, String city){
+        return new Person.Builder()
+                .name(name)
+                .surname(surname)
+                .age(age)
+                .phoneNumber(phoneNumber)
+                .city(city)
+                .build();
     }
 }
