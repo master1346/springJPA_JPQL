@@ -1,18 +1,20 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.Person;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-import java.util.List;
-import java.util.Optional;
+@Repository
+public class PersonRepository {
 
+      @PersistenceContext
+      private EntityManager entityManager;
 
-public interface PersonRepository extends CrudRepository<Person,Integer> {
-
-      List<Person> findByCity(String city);
-
-      List<Person> findByAge(int age);
-
-      Optional<Person> findByNameAndSurname(String name, String surname);
-
+      public String getPersonsByCity(String city){
+            Query query = entityManager.createQuery("select p from Person p where p.city = :city", Person.class);
+            var resultList = query.setParameter("city", city);
+            return resultList.getResultList().toString();
+      }
 }

@@ -1,22 +1,32 @@
 package com.example.demo.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 public class Person {
-    private int id;
-    @Id
-    private String name;
-    @Id
-    private String surname;
-    @Id
-    @Column(nullable = false)
-    private int age;
-
+    @EmbeddedId
+    private PersonData personData;
     private String phoneNumber;
     private String city;
 
     public Person() {
+    }
+
+    public PersonData getPersonData() {
+        return personData;
+    }
+
+    public void setPersonData(PersonData personData) {
+        this.personData = personData;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phone_number) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getCity() {
@@ -27,90 +37,20 @@ public class Person {
         this.city = city;
     }
 
-    public Person(int id, String name, String surname, int age, String phoneNumber, String city) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
-        this.phoneNumber = phoneNumber;
-        this.city = city;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getPhone_number() {
-        return phoneNumber;
-    }
-
-    public void setPhone_number(String phone_number) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getCity_of_living() {
-        return city;
-    }
-
-    public void setCity_of_living(String city_of_living) {
-        this.city = city;
-    }
-
     @Override
     public String toString() {
         return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", age=" + age +
-                ", phone_number='" + phoneNumber + '\'' +
-                ", city_of_living='" + city + '\'' +
+                "personData=" + personData +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", city='" + city + '\'' +
                 '}';
     }
 
     private static class Builder {
         private final Person person = new Person();
 
-        public Builder name(String name) {
-            person.name = name;
-            return this;
-        }
-
-        public Builder surname(String surname) {
-            person.surname = surname;
-            return this;
-        }
-
-        public Builder age(int age) {
-            person.age = age;
+        public Builder personData(PersonData personData) {
+            person.personData = personData;
             return this;
         }
 
@@ -129,13 +69,74 @@ public class Person {
 
     }
 
-    public Person initBuilder(String name, String surname, int age, String phoneNumber, String city){
+    public Person initBuilder(PersonData personData, String phoneNumber, String city){
         return new Person.Builder()
-                .name(name)
-                .surname(surname)
-                .age(age)
+                .personData(personData)
                 .phoneNumber(phoneNumber)
                 .city(city)
                 .build();
+    }
+    @Embeddable
+    public static class PersonData implements Serializable {
+        private String name;
+        private String surname;
+        @Column(nullable = false)
+        private int age;
+
+        public PersonData(String name, String surname, int age) {
+            this.name = name;
+            this.surname = surname;
+            this.age = age;
+        }
+
+        public PersonData() {
+
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getSurname() {
+            return surname;
+        }
+
+        public void setSurname(String surname) {
+            this.surname = surname;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PersonData that = (PersonData) o;
+            return age == that.age && Objects.equals(name, that.name) && Objects.equals(surname, that.surname);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, surname, age);
+        }
+
+        @Override
+        public String toString() {
+            return "PersonData{" +
+                    "name='" + name + '\'' +
+                    ", surname='" + surname + '\'' +
+                    ", age=" + age +
+                    '}';
+        }
     }
 }

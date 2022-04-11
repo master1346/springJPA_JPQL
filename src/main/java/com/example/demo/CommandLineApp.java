@@ -15,24 +15,23 @@ import java.util.stream.IntStream;
 public class CommandLineApp implements CommandLineRunner {
    @PersistenceContext
    private EntityManager entityManager;
-    public static int rnd(int min, int max){
-        max -= min;
-        return (int) (Math.random() * ++max) + min;
-        }
+
     @Override
     @Transactional
     public void run(String... args) {
-        var names = List.of("Алексей", "Антон","Борис", "Валерий");
-        var surname =  List.of("Иванов", "Гаврилов","Федоров", "Ветров");
-        var city =  List.of("Москва", "Питер","Казань", "Тверь");
+        var names = List.of("Алексей", "Антон","Борис", "Валерий", "Кирилл","Женя","Федор");
+        var surname =  List.of("Иванов", "Гаврилов","Федоров", "Ветров","Петров","Азаров","Эмин");
+        var city =  List.of("Москва", "Питер");
+        var age = List.of(20,21,44,60,53,31,35);
         var random = new Random();
 
-        IntStream.range(0, 15)
+        IntStream.range(0, 6)
                 .forEach(i -> {
                     var person = new Person()
-                            .initBuilder(names.get(random.nextInt(names.size())),
-                                    surname.get(random.nextInt(surname.size())),
-                                    rnd(15, 60),
+                            .initBuilder(new Person.PersonData(
+                                    names.get(i),
+                                    surname.get(i),
+                                    age.get(i)),
                                     "89513369216",
                                     city.get(random.nextInt(city.size()))
                                     );
